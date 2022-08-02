@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   UserIcon,
@@ -16,14 +16,34 @@ import {
 } from "react-native-heroicons/outline";
 import Categoires from "../components/Categoires";
 import FeaturedRow from "../components/FeaturedRow";
+import sanityClient from "../sanity";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [featuredCategories, setFeaturedCategories] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
+  }, []);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+        *[_type == "featured"] {
+          ...,
+          restaurants[]->{
+            ...,
+            dishes[]->
+          },
+        }
+    `
+      )
+      .then((data) => {
+        setFeaturedCategories(data);
+      });
   }, []);
 
   return (
@@ -66,31 +86,20 @@ const HomeScreen = () => {
         className="bg-gray-100"
         contentContainerStyle={{
           paddingBottom: 100,
-        }}
-      >
+        }}>
         {/* Categories */}
         <Categoires />
 
         {/* Featured Rows */}
-        <FeaturedRow
-          id="123"
-          title="Freatured"
-          description="Paid placements from our partners"
-        />
-
+        {featuredCategories?.map((category) => (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
         {/* Tasty Discounts */}
-        <FeaturedRow
-          id="1234"
-          title="Freatured"
-          description="Paid placements from our partners"
-        />
-
-        {/* Offers near you */}
-        <FeaturedRow
-          id="12345"
-          title="Freatured"
-          description="Paid placements from our partners"
-        />
       </ScrollView>
     </SafeAreaView>
   );

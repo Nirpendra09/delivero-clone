@@ -27,7 +27,7 @@ const FeaturedRow = ({ id, title, description }) => {
       .then((data) => {
         setRestaurants(data?.restaurants);
       });
-  }, []);
+  }, [id]);
 
   console.log(restaurants);
 
@@ -45,7 +45,8 @@ const FeaturedRow = ({ id, title, description }) => {
           paddingHorizontal: 15,
         }}
         showsHorizontalScrollIndicator={false}
-        className="pt-4">
+        className="pt-4"
+      >
         {/* RestaurantCards */}
 
         {restaurants?.map((restaurant) => (
@@ -63,7 +64,6 @@ const FeaturedRow = ({ id, title, description }) => {
             lat={restaurant.lat}
           />
         ))}
-
       </ScrollView>
     </View>
   );

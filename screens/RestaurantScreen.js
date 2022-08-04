@@ -7,6 +7,11 @@ import {
   LocationMarkerIcon,
   StarIcon,
 } from "react-native-heroicons/outline";
+import {
+  ChevronRightIcon,
+  QuestionMarkCircleIcon,
+} from "react-native-heroicons/solid";
+import DishRow from "../components/DishRow";
 
 const RestaurantScreen = () => {
   const navigation = useNavigation();
@@ -43,8 +48,7 @@ const RestaurantScreen = () => {
         />
         <TouchableOpacity
           onPress={navigation.goBack}
-          className="absolute top-14 left-5 p-2 bg-gray-100 rounded-full"
-        >
+          className="absolute top-14 left-5 p-2 bg-gray-100 rounded-full">
           <ArrowLeftIcon size={20} color="#00CCBB" />
         </TouchableOpacity>
       </View>
@@ -67,6 +71,30 @@ const RestaurantScreen = () => {
           </View>
           <Text className="text-gray-500 mt-2 pb-4">{short_description}</Text>
         </View>
+
+        <TouchableOpacity className="flex-row items-center p-4 space-x-2 border-y border-gray-300">
+          <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} />
+          <Text className="pl-2 flex-1 text-md font-bold">
+            Have a food allergy?
+          </Text>
+          <ChevronRightIcon color="#00CCBB" />
+        </TouchableOpacity>
+      </View>
+
+      <View>
+        <Text className="px-4 pt-4 mb-3 font-bold text-xl">Menu</Text>
+
+        {/* Dish rows */}
+        {dishes.map((dish) => (
+          <DishRow
+            key={dish._id}
+            id={dish._id}
+            name={dish.name}
+            description={dish.short_description}
+            price={dish.price}
+            image={dish.image}
+          />
+        ))}
       </View>
     </ScrollView>
   );

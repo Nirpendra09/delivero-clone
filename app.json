@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "delivero-clone",
+    "name": "Delivero Clone",
     "slug": "delivero-clone",
+    "privacy": "public",
+    "description": "Food Delivery",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -100,6 +100,28 @@ const BasketScreen = () => {
               <Currency quantity={basketTotal} currency="INR" />
             </Text>
           </View>
+
+          <View className="flex-row justify-between">
+            <Text className="text-gray-400 ">Delivery Fee</Text>
+            <Text className="text-gray-400 ">
+              <Currency quantity={199} currency="INR" />
+            </Text>
+          </View>
+
+          <View className="flex-row justify-between">
+            <Text>Order Total</Text>
+            <Text className="font-extrabold">
+              <Currency quantity={basketTotal + 199} currency="INR" />
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PreparingOrderScreen")}
+            className="rounded-lg bg-[#00CCBB] p-4">
+            <Text className="text-center text-white text-lg font-bold">
+              Place Order
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
